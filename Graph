@@ -1,0 +1,77 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Graph {
+   public static int V=120;
+   public static int componentCount;
+   private static boolean[] tag = new boolean[V];
+   private static ArrayList<Integer>[] adj_list = Arrays.initializeWithDefaultArrayListOfIntInstances(V);
+   private static ArrayList<Integer>[] component = Arrays.initializeWithDefaultArrayListOfIntInstances(V);
+
+   private static void init(int node_count) {
+       for (int i = 1; i <= node_count; ++i) {
+           {
+               adj_list[i].clear();
+               component[i].clear();
+           }
+       }
+   }
+
+   private static void DFS(int u) {
+       component[componentCount - 1].add(u);
+       int adj_count = adj_list[u].size();
+       for (int i = 0; i < adj_count; ++i) {
+           int v = adj_list[u].get(i);
+           if (!tag[v]) {
+               tag[v] = true;
+               DFS(v);
+           }
+       }
+   }
+
+   private static void print_ans() {
+        for (int i = 0; i < componentCount; ++i) {
+        	int component_size = component[i].size();
+        	System.out.printf("Connected Component:\n ", i + 1);
+               for (int j = 0; j < component_size; ++j) {
+                   if (j != 0) {
+                       System.out.print(" ");
+                   }
+                   System.out.print(component[i].get(j));
+               }
+               System.out.print("\n");
+           }
+       }
+
+
+       public static void main(String[] args) throws FileNotFoundException{
+           System.out.println("Enter file name in the format: filename.txt");
+           Scanner stdin = new Scanner(System.in);
+           String filename = stdin.nextLine();
+           File file = new File(filename);
+           Scanner input = new Scanner(file);
+
+           int nodeCount = input.nextInt();
+           input.nextLine();
+           int edgeCount = input.nextInt();
+
+           while (input.hasNextLine()) {
+               int u = input.nextInt();
+               int v = input.nextInt();
+               adj_list[u].add(v);
+               adj_list[v].add(u);
+           }
+           for (int i = 1; i <=nodeCount ; ++ i )
+           {
+               if (!tag[i])
+               {
+                   ++componentCount;
+                   tag [ i ] = true ;
+                   DFS( i );
+               }
+           }
+           print_ans();
+       }
+}
