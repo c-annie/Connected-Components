@@ -46,32 +46,30 @@ public class Graph {
        }
 
 
-       public static void main(String[] args) throws FileNotFoundException{
-           System.out.println("Enter file name in the format: filename.txt");
-           Scanner stdin = new Scanner(System.in);
-           String filename = stdin.nextLine();
-           File file = new File(filename);
-           Scanner input = new Scanner(file);
+    public static void main(String[] args) throws FileNotFoundException{
+         System.out.println("Enter file name in the format: filename.txt");
+         Scanner stdin = new Scanner(System.in);
+         String filename = stdin.nextLine();
+         File file = new File(filename);
+         Scanner input = new Scanner(file);
 
-           int nodeCount = input.nextInt();
-           input.nextLine();
-           int edgeCount = input.nextInt();
+         int nodeCount = input.nextInt();
+         input.nextLine();
+         int edgeCount = input.nextInt();
 
-           while (input.hasNextLine()) {
-               int u = input.nextInt();
-               int v = input.nextInt();
-               adj_list[u].add(v);
-               adj_list[v].add(u);
-           }
-           for (int i = 1; i <=nodeCount ; ++ i )
-           {
-               if (!tag[i])
-               {
-                   ++componentCount;
-                   tag [ i ] = true ;
-                   DFS( i );
-               }
-           }
-           print_ans();
-       }
+         while (input.hasNextLine()) {
+             int u = input.nextInt();
+             int v = input.nextInt();
+             adj_list[u].add(v);
+             adj_list[v].add(u);
+         }
+         for (int i = 1; i <=nodeCount ; ++i ){
+             if (!tag[i]){
+                ++componentCount;
+                tag [ i ] = true ;
+                DFS( i );
+            }
+        }
+       print_ans();
+    }
 }
